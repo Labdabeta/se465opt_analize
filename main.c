@@ -67,6 +67,7 @@ CalleeListHANDLE parse_callees(FILE *f)
     return ret;
 }
 
+
 //returns NULL when out of input or invalid input is received
 ParsedFileHANDLE parse_opt_file(FILE *f)
 {
@@ -113,17 +114,6 @@ ParsedFileHANDLE parse_opt_file(FILE *f)
     ret->next = parse_opt_file(f);
     return ret;
 }
-typedef struct FunctionDataTAG {
-    int id;
-    int refCount;
-    int numCallees;
-    int *callees;
-}FunctionData,*FunctionDataHANDLE;
-
-typedef struct CallingMapTAG {
-    int numFunctions;
-    FunctionData *functions;
-} CallingMap,*CallingMapHANDLE;
 
 typedef struct FunctionDataTAG {
     int id; // <-- the function 'name'
