@@ -1,0 +1,43 @@
+CallGraph Root is: main
+Call graph node <<null function>><<0x1bb8f10>>  #uses=0
+  CS<0x0> calls function 'main'
+
+Call graph node for function: 'main'<<0x1bd0d80>>  #uses=1
+  CS<0x1bb6c78> calls function 'A'
+
+Call graph node for function: 'G'<<0x1bd0f60>>  #uses=1
+  CS<0x1bb79e8> calls function 'M'
+
+Call graph node for function: 'O'<<0x1bd1130>>  #uses=1
+  CS<0x1bb7da8> calls function 'P'
+
+Call graph node for function: 'P'<<0x1bd11d0>>  #uses=1
+  CS<0x1bb7ee8> calls function 'S'
+
+Call graph node for function: 'S'<<0x1bd1270>>  #uses=1
+  CS<0x1bb8028> calls function 'D'
+
+Call graph node for function: 'D'<<0x1bd1310>>  #uses=3
+
+Call graph node for function: 'B'<<0x1bd0ec0>>  #uses=1
+  CS<0x1bb8228> calls function 'C'
+
+Call graph node for function: 'C'<<0x1bd13b0>>  #uses=1
+  CS<0x1bb8368> calls function 'D'
+  CS<0x1bb83e8> calls function 'X'
+
+Call graph node for function: 'A'<<0x1bd0e20>>  #uses=1
+  CS<0x1bb7828> calls function 'B'
+  CS<0x1bb78a8> calls function 'G'
+
+Call graph node for function: 'M'<<0x1bd0ef0>>  #uses=1
+  CS<0x1bb7b28> calls function 'N'
+
+Call graph node for function: 'N'<<0x1bd1090>>  #uses=1
+  CS<0x1bb7c68> calls function 'O'
+
+Call graph node for function: 'X'<<0x1bd1480>>  #uses=1
+  CS<0x1bb8528> calls function 'Y'
+
+Call graph node for function: 'Y'<<0x1bd1410>>  #uses=1
+  CS<0x1bb8668> calls function 'D'

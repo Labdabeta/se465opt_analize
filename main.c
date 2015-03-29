@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> //for atoi
+
 /// Some buffer sizes
 #define LINE_LENGTH_BUFFER_SIZE 256
 #define FUNCTION_NAME_BUFFER_SIZE 100
@@ -35,15 +36,16 @@ typedef struct ParsedFileTAG {
 CalleeListHANDLE parse_callees(FILE *f)
 {
     char *line;///<-- Represents a line read from f
-    char fname[FUNCTION_NAME_BUFFER_SIZE];///<-- Represents a function name
     CalleeListHANDLE ret;///<-- The returned callee list structure
     int i;///<-- an iterator
+
+    if (feof(f)) return NULL;
 
     line = malloc(sizeof(char)*LINE_LENGTH_BUFFER_SIZE);
     fgets(line, LINE_LENGTH_BUFFER_SIZE, f);
 
     //Base case: newline returns NULL
-    if (line[0]=='\n')
+    if (line[0]!=' ' && line[0]!='\t')
     {
         free(line);
         return NULL;
@@ -53,10 +55,13 @@ CalleeListHANDLE parse_callees(FILE *f)
 
     while (*(line++) != '\''); //scan to first '
     i=0;
-    fname[i++] = *line;
-    while (*(line++) != '\'')fname[i++] = *line;
 
-    ret->name = fname;
+
+    ret->name = malloc(sizeof(char)*FUNCTION_NAME_BUFFER_SIZE);
+    ret->name[i++] = *line;
+    while (*(line++) != '\'')ret->name[i++] = *line;
+    ret->name[i-1] = '\0';
+
 
     ret->next = parse_callees(f);
     return ret;
@@ -102,13 +107,24 @@ ParsedFileHANDLE parse_opt_file(FILE *f)
 
     ret->num_uses = atoi(num);
     free(num);
-    free(line);
+    free(save);
 
     ret->callees = parse_callees(f);
     
     ret->next = parse_opt_file(f);
     return ret;
 }
+
+typedef struct FunctionDataTAG {
+    int id; // <-- the function 'name'
+    int refCount; // <-- how many times this function is referenced
+    int numCallees; // <-- how many functions this function calls
+    int *callees; // <-- an array of the functions this function calls in order
+}FunctionData,*FunctionDataHANDLE;
+typedef struct CallingMapTAG {
+    int numFunctions;
+    FunctionData *functions;
+} CallingMap,*CallingMapHANDLE;
 
 int main(int argc, char *argv[])
 {
