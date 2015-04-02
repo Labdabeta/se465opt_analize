@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h> //for atoi
+#include "opt_file.h"
 
-/// Some buffer sizes
 #define LINE_LENGTH_BUFFER_SIZE 256
-#define FUNCTION_NAME_BUFFER_SIZE 100
-#define NUM_USES_BUFFER_SIZE 10
 
 typedef struct BugTypeTAG {
     char *fun1,*fun2,*scope,*bug;
@@ -12,11 +10,19 @@ typedef struct BugTypeTAG {
     float confidence;
 }BugType,*BugTypeHANDLE;
 
+
+
+/** @brief A structure to hold a list of callees.
+  * 
+  * This structure holds a list of all callees in a scope.
+  * Internally it uses a linked list structure with each node representing a
+  * single scope in the file.
+  */
 typedef struct CalleeListTAG {
     char *name;
 
     struct CalleeListTAG *next;
-}CalleeList,*CalleeListHANDLE;
+}CalleeList;
 
 /** @brief A structure to hold a parsed file.
   * 
@@ -26,94 +32,10 @@ typedef struct CalleeListTAG {
   */
 typedef struct ParsedFileTAG {
     char *fname;
-    int num_uses;
-    CalleeListHANDLE callees;
+    CalleeList *callees;
 
     struct ParsedFileTAG *next;
-}ParsedFile,*ParsedFileHANDLE;
-
-//returns NULL when out of input or invalid input is received
-CalleeListHANDLE parse_callees(FILE *f)
-{
-    char *line;///<-- Represents a line read from f
-    CalleeListHANDLE ret;///<-- The returned callee list structure
-    int i;///<-- an iterator
-
-    if (feof(f)) return NULL;
-
-    line = malloc(sizeof(char)*LINE_LENGTH_BUFFER_SIZE);
-    fgets(line, LINE_LENGTH_BUFFER_SIZE, f);
-
-    //Base case: newline returns NULL
-    if (line[0]!=' ' && line[0]!='\t')
-    {
-        free(line);
-        return NULL;
-    }
-
-    ret = malloc(sizeof(CalleeList));
-
-    while (*(line++) != '\''); //scan to first '
-    i=0;
-
-
-    ret->name = malloc(sizeof(char)*FUNCTION_NAME_BUFFER_SIZE);
-    ret->name[i++] = *line;
-    while (*(line++) != '\'')ret->name[i++] = *line;
-    ret->name[i-1] = '\0';
-
-
-    ret->next = parse_callees(f);
-    return ret;
-}
-
-
-//returns NULL when out of input or invalid input is received
-ParsedFileHANDLE parse_opt_file(FILE *f)
-{
-    //Variables
-    char *line;///<-- Represents a line read from f
-    char *save;///<-- Saved base of line for freeability
-    char *fname;///<-- Represents a function name
-    char *num;///<-- Represents a use number
-    ParsedFileHANDLE ret;///<-- The returned parsed file structure
-    int i;///<-- an iterator
-
-    //Base case: empty file returns NULL
-    if (feof(f)) return NULL;
-
-    line = malloc(sizeof(char)*LINE_LENGTH_BUFFER_SIZE);
-    save = line;
-    fname = malloc(sizeof(char)*FUNCTION_NAME_BUFFER_SIZE);
-    num = malloc(sizeof(char)*NUM_USES_BUFFER_SIZE);
-    ret = malloc(sizeof(ParsedFile));
-
-    fgets(line, LINE_LENGTH_BUFFER_SIZE, f);
-
-    while (*(line++) != '\''); //scan to first '
-
-    i=0;
-    while (*line != '\'')
-        fname[i++] = *(line++);
-    fname[i] = 0;
-
-    ret->fname = fname;
-
-    while (*(line++) != '='); //scan to first =
-
-    i=0;
-    while (*line)
-        num[i++] = *line++;
-
-    ret->num_uses = atoi(num);
-    free(num);
-    free(save);
-
-    ret->callees = parse_callees(f);
-    
-    ret->next = parse_opt_file(f);
-    return ret;
-}
+}ParsedFile;
 
 typedef struct FunctionDataTAG {
     int id; // <-- the function 'name'
@@ -138,7 +60,7 @@ int main(int argc, char *argv[])
     while (buf[0]!='\n')
         fgets(buf,LINE_LENGTH_BUFFER_SIZE,input_file);//get rid of <null function>
 
-    ParsedFileHANDLE pf = parse_opt_file(input_file);
+    ParsedFile *pf = parse_opt_file(input_file);
 
     while (pf)
     {
