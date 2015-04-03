@@ -121,3 +121,20 @@ ParsedFileHANDLE parse_opt_file(FILE *f)
     ret->next = parse_opt_file(f);
     return ret;
 }
+
+void free_parsed_file(ParsedFileHANDLE pfh)
+{
+    ParsedFile *pf=pfh;
+    CalleeList *cl;
+
+    while (pf->callees)
+    {
+        cl = pf->callees;
+        pf->callees = pf->callees->next;
+        free(cl->name);
+        free(cl);
+    }
+
+    free_parsed_file(pf->next);
+    free(pf);
+}

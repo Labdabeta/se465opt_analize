@@ -72,6 +72,7 @@ int main(int argc, char *argv[])
         }
         pf = pf->next;
     }
+//    free_parsed_file(sv); // if we hadn't destroyed pf->callees this should work
     return 0;
 }
      

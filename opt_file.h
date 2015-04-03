@@ -6,5 +6,9 @@
 typedef void *ParsedFileHANDLE;
 
 ParsedFileHANDLE parse_opt_file(FILE *f);
+void free_parsed_file(ParsedFileHANDLE);
+
+
+//TODO: add push/pop/etc to ParsedFileHANDLE, use to simplify algorithms
 
 #endif 
