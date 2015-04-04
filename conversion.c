@@ -100,6 +100,12 @@ int calling_map_num_functions(const CallingMapHANDLE cmh)
     return cm->numFunctions;
 }
 
+int calling_map_num_callees(const CallingMapHANDLE cmh, int fid)
+{
+    const CallingMap *cm=cmh;
+    return cm->functions[fid].numCallees;
+}
+
 int *calling_map_list_callees(const CallingMapHANDLE cmh, int fid)
 {
     const CallingMap *cm=cmh;
