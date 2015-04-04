@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     CallingMapHANDLE cm = calling_map_from_parsed_file(pf);
     SupportMapHANDLE sm = generate_support_map(cm);
 
-    printf("%d",support_map_get_support(sm,1,1));
+    printf("%s: %d",calling_map_get_fname(cm,1),support_map_get_support(sm,1,1));
 
     free_support_map(sm);
     free_calling_map(cm);
