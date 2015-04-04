@@ -1,0 +1,11 @@
+CallGraph Root is: main
+Call graph node <<null function>><<0xd30840>>  #uses=0
+  CS<0x0> calls function 'main'
+
+Call graph node for function: 'A'<<0xd39840>>  #uses=1
+
+Call graph node for function: 'main'<<0xd397a0>>  #uses=1
+  CS<0xd20c78> calls function 'A'
+  CS<0xd20cf8> calls function 'B'
+
+Call graph node for function: 'B'<<0xd398e0>>  #uses=1
