@@ -28,9 +28,31 @@ static void push_bug(BugReport br, BugList *bl)
 }
 
 //Adds all instances of a without b in cmh to bl
-static void add_bugs(CallingMapHANDLE cmh, BugList *bl, int a, int b)
+//TODO either incorporate into generate_bug_list or find a way to pass s and c in
+static void add_bugs(CallingMapHANDLE cmh, BugList *bl, int a, int b, int s, int c)
 {
-    //TODO
+    int i,ii;
+    BugReport br;
+    for (i=0; i<calling_map_num_functions(cmh); ++i)
+    {
+        int *callees = calling_map_list_callees(cmh,i);
+        int afound = 0;//no a yet
+        int bfound = 0;//no b yet
+        for (ii=0; ii<calling_map_num_callees(cmh,i); ++i)
+        {
+            if (callees[ii] == a) afound = 1;
+            if (callees[ii] == b) bfound = 1;
+            if (afound && bfound) break;
+        }
+        if (afound && !bfound)
+        {
+            br.source = a;
+            br.scope = i;
+            br.missing = b;
+            br.support = s;
+            br.confidence = c;
+        }
+    }
 }
 
 BugListHANDLE generate_bug_list(const CallingMapHANDLE cmh, int t_support, int t_confidence)
@@ -47,27 +69,34 @@ BugListHANDLE generate_bug_list(const CallingMapHANDLE cmh, int t_support, int t
             if (ii==i) continue;
             if (support_map_get_support(sm,i,ii) > t_support)
             {
-                if (((100*support_map_get_support(sm,i,ii))/
-                     (100*support_map_get_support(sm,i,i))) > t_confidence)
-                    add_bugs(cmh,ret,i,ii);
+                int confidence = 100*support_map_get_support(sm,i,ii);
+                confidence /= 100*support_map_get_support(sm,i,i);
+                if (confidence > t_confidence)
+                    add_bugs(cmh,ret,i,ii,support_map_get_support(sm,i,ii),
+                        confidence);
             }
         }
     }
+    free_support_map(sm);
     return ret;
 }
-
+#define MAX(a,b) ((a)>(b)?(a):(b))
+#define MIN(a,b) ((a)>(b)?(b):(a))
 void print_bug_list(const BugListHANDLE blh, const CallingMapHANDLE cmh)
 {
     BugList *bl = blh;
-    int i;
+    bl=bl->next;
 
-    for (i=0; i<bl->numBugs; ++i)
+    while (bl)
     {
         printf("bug: %s in %s, pair: (%s, %s), support: %d, confidence: %.2f%%\n",
-            calling_map_get_fname(cmh,bl->bugs[i].source),
-            calling_map_get_fname(cmh,bl->bugs[i].scope),
-            calling_map_get_fname(cmh,MAX(bl->bugs[i].source,bl->bugs[i].missing)),
-            calling_map_get_fname(cmh,MIN(bl->bugs[i].missing,bl->bugs[i].source)),
-            bl->bugs[i].support,bl->bugs[i].confidence);
+            calling_map_get_fname(cmh,bl->bug.source),
+            calling_map_get_fname(cmh,bl->bug.scope),
+            calling_map_get_fname(cmh,MAX(bl->bug.source,bl->bug.missing)),
+            calling_map_get_fname(cmh,MIN(bl->bug.missing,bl->bug.source)),
+            bl->bug.support,(float)bl->bug.confidence/100.0);
+        bl = bl->next;
     }
 }
+#undef MAX
+#undef MIN

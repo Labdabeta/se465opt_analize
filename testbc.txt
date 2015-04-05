@@ -1,0 +1,49 @@
+CallGraph Root is: main
+Call graph node <<null function>><<0x96d080>>  #uses=0
+  CS<0x0> calls function 'main'
+
+Call graph node for function: 'main'<<0x975fc0>>  #uses=1
+  CS<0x95c558> calls function 'scope1'
+  CS<0x95c5d8> calls function 'scope2'
+  CS<0x95c658> calls function 'scope3'
+  CS<0x95c6d8> calls function 'scope4'
+  CS<0x95c758> calls function 'scope5'
+  CS<0x95c7d8> calls function 'scope6'
+
+Call graph node for function: 'scope2'<<0x976100>>  #uses=1
+  CS<0x95cbf8> calls function 'A'
+  CS<0x95cc78> calls function 'C'
+  CS<0x95ccf8> calls function 'D'
+
+Call graph node for function: 'scope5'<<0x976300>>  #uses=1
+  CS<0x95d2b8> calls function 'B'
+  CS<0x95d338> calls function 'D'
+  CS<0x95d3b8> calls function 'A'
+
+Call graph node for function: 'scope6'<<0x976200>>  #uses=1
+  CS<0x95d4f8> calls function 'B'
+  CS<0x95d578> calls function 'D'
+
+Call graph node for function: 'B'<<0x976520>>  #uses=6
+
+Call graph node for function: 'D'<<0x976660>>  #uses=5
+
+Call graph node for function: 'A'<<0x976480>>  #uses=4
+
+Call graph node for function: 'C'<<0x9764b0>>  #uses=2
+
+Call graph node for function: 'scope1'<<0x976060>>  #uses=2
+  CS<0x95c938> calls function 'A'
+  CS<0x95c9b8> calls function 'B'
+  CS<0x95ca38> calls function 'C'
+  CS<0x95cab8> calls function 'D'
+
+Call graph node for function: 'scope3'<<0x976090>>  #uses=1
+  CS<0x95ce38> calls function 'A'
+  CS<0x95ceb8> calls function 'B'
+  CS<0x95cf38> calls function 'B'
+
+Call graph node for function: 'scope4'<<0x976290>>  #uses=1
+  CS<0x95d078> calls function 'B'
+  CS<0x95d0f8> calls function 'D'
+  CS<0x95d178> calls function 'scope1'

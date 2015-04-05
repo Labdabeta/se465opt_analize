@@ -2,8 +2,7 @@
 #include <stdlib.h> //for atoi
 #include "opt_file.h"
 #include "conversion.h"
-#include "support.h"
-
+#include "bugs.h"
 
 
 
@@ -24,12 +23,11 @@ int main(int argc, char *argv[])
     CallingMapHANDLE cm = calling_map_from_parsed_file(pf);
 
     print_calling_map(cm);
+    printf("\n\n\n");
 
-    SupportMapHANDLE sm = generate_support_map(cm);
+    BugListHANDLE bl = generate_bug_list(cm,3,65);
+    print_bug_list(bl,cm);
 
-    printf("%s: %d",calling_map_get_fname(cm,2),support_map_get_support(sm,2,2));
-
-    free_support_map(sm);
     free_calling_map(cm);
     free_parsed_file(pf);
     return 0;
