@@ -28,9 +28,33 @@ typedef struct CallingMapTAG {
     Function *functions;
 }CallingMap;
 
+
+static void uniquize(int **arr, int *length)
+{
+    int newLength = 0;
+    int *newArr = malloc(sizeof(int)*(*length));
+    int i,ii;
+    
+    for (i=0; i<*length; ++i)
+    {
+        int isDup = 0;
+        for (ii=0; ii<newLength; ++ii)
+            if ((*arr)[i]==newArr[ii]) isDup = 1;
+        if (!isDup)
+            newArr[newLength++] = (*arr)[i];
+    }
+
+    *arr = newArr;
+    *length = newLength;
+}
+
+
 static void remove_duplicates(CallingMap *cm)
 {
-    //TODO
+    int i,ii;
+
+    for (i=0; i<cm->numFunctions; ++i)
+        uniquize(&(cm->functions[i].callees),&(cm->functions[i].numCallees));
 }
 
 CallingMapHANDLE calling_map_from_parsed_file(const ParsedFileHANDLE pfh)

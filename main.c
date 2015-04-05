@@ -4,32 +4,41 @@
 #include "conversion.h"
 #include "bugs.h"
 
-
-
-
 int main(int argc, char *argv[])
 {
-    char *input_file_name = argv[1];
-    
-    FILE *input_file = fopen(input_file_name,"r");
-    
+    char *input_file_name = "test.txt";
+    int t_support = 3;
+    int t_confidence = 65;
+    FILE *input_file;
     char buf[LINE_LENGTH_BUFFER_SIZE];
-    fgets(buf,LINE_LENGTH_BUFFER_SIZE,input_file);//get rid of the entry point line
+    ParsedFileHANDLE pf;
+    CallingMapHANDLE cm;
+    BugListHANDLE bl;
 
-    while (buf[0]!='\n')
-        fgets(buf,LINE_LENGTH_BUFFER_SIZE,input_file);//get rid of <null function>
+    if (argc > 1)
+        input_file_name = argv[1];
+    if (argc > 2)
+        t_support = atoi(argv[2]);
+    if (argc > 3)
+        t_confidence = atoi(argv[3]);
 
-    ParsedFileHANDLE pf = parse_opt_file(input_file);
-    CallingMapHANDLE cm = calling_map_from_parsed_file(pf);
+    input_file = fopen(input_file_name, "r");
+    fgets(buf, LINE_LENGTH_BUFFER_SIZE, input_file);//get rid of entry point
 
-    print_calling_map(cm);
-    printf("\n\n\n");
+    while (buf[0]!='\n') //get rid of <null function>
+        fgets(buf, LINE_LENGTH_BUFFER_SIZE, input_file);
 
-    BugListHANDLE bl = generate_bug_list(cm,3,65);
+    pf = parse_opt_file(input_file);
+    cm = calling_map_from_parsed_file(pf);
+
+    if (argc > 4)
+        print_calling_map(cm);
+
+    bl = generate_bug_list(cm,t_support,t_confidence);
     print_bug_list(bl,cm);
 
+    //TO DO: free buglist
     free_calling_map(cm);
     free_parsed_file(pf);
     return 0;
 }
-     
