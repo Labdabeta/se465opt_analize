@@ -22,11 +22,14 @@ int main(int argc, char *argv[])
 
     ParsedFileHANDLE pf = parse_opt_file(input_file);
     CallingMapHANDLE cm = calling_map_from_parsed_file(pf);
-    SupportMapHANDLE sm = generate_support_map(cm);
 
-    printf("%s: %d",calling_map_get_fname(cm,1),support_map_get_support(sm,1,1));
+    print_calling_map(cm);
 
-    free_support_map(sm);
+    //SupportMapHANDLE sm = generate_support_map(cm);
+
+    //printf("%s: %d",calling_map_get_fname(cm,1),support_map_get_support(sm,1,1));
+
+    //free_support_map(sm);
     free_calling_map(cm);
     free_parsed_file(pf);
     return 0;

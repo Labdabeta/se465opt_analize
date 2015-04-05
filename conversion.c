@@ -127,6 +127,23 @@ int calling_map_get_fid(const CallingMapHANDLE cmh, const char *name)
     return -1;
 }
 
+void print_calling_map(const CallingMapHANDLE cmh)
+{
+    CallingMap *cm = cmh;
+    int i,ii;
+    printf("Num functions: %d\n\n", cm->numFunctions);
+    for (i=0; i<cm->numFunctions; ++i)
+    {
+        printf("Name: %s(%d) - %d\n",
+            cm->functions[i].name,cm->functions[i].id,cm->functions[i].numCallees);
+        printf("Callees: ");
+        for (ii=0; ii<cm->functions[i].numCallees; ++ii)
+            printf("%d ",cm->functions[i].callees[ii]);
+        printf("\n");
+    }
+}
+    
+
             
 
 
