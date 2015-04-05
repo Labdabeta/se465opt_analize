@@ -25,11 +25,11 @@ int main(int argc, char *argv[])
 
     print_calling_map(cm);
 
-    //SupportMapHANDLE sm = generate_support_map(cm);
+    SupportMapHANDLE sm = generate_support_map(cm);
 
-    //printf("%s: %d",calling_map_get_fname(cm,1),support_map_get_support(sm,1,1));
+    printf("%s: %d",calling_map_get_fname(cm,2),support_map_get_support(sm,2,2));
 
-    //free_support_map(sm);
+    free_support_map(sm);
     free_calling_map(cm);
     free_parsed_file(pf);
     return 0;

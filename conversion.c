@@ -82,6 +82,7 @@ CallingMapHANDLE calling_map_from_parsed_file(const ParsedFileHANDLE pfh)
             cl = cl->next;
         }
         pf = pf->next;
+        ++i;
     }
 
     return ret;

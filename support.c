@@ -24,7 +24,7 @@ SupportMapHANDLE generate_support_map(const CallingMapHANDLE cmh)
         int *callees = calling_map_list_callees(cmh,i);
         for (ii=0; ii<calling_map_num_callees(cmh,i); ++ii)
         {
-            for (iii=0; iii<ii; ++iii)
+            for (iii=0; iii<=ii; ++iii)
             {
                 ret->support[callees[iii]*ret->numFunctions+callees[ii]]++;
                 if (callees[iii]!=callees[ii])
