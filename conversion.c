@@ -28,6 +28,11 @@ typedef struct CallingMapTAG {
     Function *functions;
 }CallingMap;
 
+static void remove_duplicates(CallingMap *cm)
+{
+    //TODO
+}
+
 CallingMapHANDLE calling_map_from_parsed_file(const ParsedFileHANDLE pfh)
 {
     const ParsedFile *pf = pfh;
@@ -84,7 +89,7 @@ CallingMapHANDLE calling_map_from_parsed_file(const ParsedFileHANDLE pfh)
         pf = pf->next;
         ++i;
     }
-
+    remove_duplicates(ret);
     return ret;
 }
 
