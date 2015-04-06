@@ -93,8 +93,8 @@ void print_bug_list(const BugListHANDLE blh, const CallingMapHANDLE cmh)
         printf("bug: %s in %s, pair: (%s, %s), support: %d, confidence: %.2f%%\n",
             calling_map_get_fname(cmh,bl->bug.source),
             calling_map_get_fname(cmh,bl->bug.scope),
-            calling_map_get_fname(cmh,MAX(bl->bug.source,bl->bug.missing)),
             calling_map_get_fname(cmh,MIN(bl->bug.missing,bl->bug.source)),
+            calling_map_get_fname(cmh,MAX(bl->bug.source,bl->bug.missing)),
             bl->bug.support,(float)bl->bug.confidence);
         bl = bl->next;
     }

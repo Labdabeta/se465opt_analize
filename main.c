@@ -23,7 +23,11 @@ int main(int argc, char *argv[])
         t_confidence = atoi(argv[3]);
 
     input_file = fopen(input_file_name, "r");
-    fgets(buf, LINE_LENGTH_BUFFER_SIZE, input_file);//get rid of entry point
+		int numEntryLines = 6;
+    while (numEntryLines >= 0) {
+    	fgets(buf, LINE_LENGTH_BUFFER_SIZE, input_file);//get rid of entry point
+    	--numEntryLines;
+    }
 
     while (buf[0]!='\n') //get rid of <null function>
         fgets(buf, LINE_LENGTH_BUFFER_SIZE, input_file);

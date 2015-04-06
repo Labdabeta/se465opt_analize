@@ -34,10 +34,18 @@ static CalleeList *parse_callees(FILE *f)
         free(line);
         return NULL;
     }
-
+    
     ret = malloc(sizeof(CalleeList));
-
-    while (*(line++) != '\''); //scan to first '
+		
+		char temp = *(line++);
+    while (temp != '\'' && temp != 'e'){ //scan to first ' or e
+    	temp = *(line++);
+    }
+ 		
+ 		//case 2: call to an external node
+    if (temp == 'e') return NULL;
+    
+		//case 3: actual call we care about
     i=0;
 
     ret->name = malloc(sizeof(char)*FUNCTION_NAME_BUFFER_SIZE);
@@ -79,21 +87,23 @@ ParsedFileHANDLE parse_opt_file(FILE *f)
     ret = malloc(sizeof(ParsedFile));
 
     fgets(line, LINE_LENGTH_BUFFER_SIZE, f);
-
+    
+    if (feof(f) || *(line++) == '\n') return NULL; //if it's the end of the file
     while (*(line++) != '\''); //scan to first '
 
-    i=0;
-    while (*line != '\'')
-        fname[i++] = *(line++);
-    fname[i] = 0;
+ 	  i=0;
+ 	  while (*line != '\'')
+ 	      fname[i++] = *(line++);
+ 	  fname[i] = 0;
 
-    ret->fname = fname;
+ 	  ret->fname = fname;
 
-    free(save);
+ 	  free(save);
 
-    ret->callees = parse_callees(f);
+ 	  ret->callees = parse_callees(f);
 
-    ret->next = parse_opt_file(f);
+ 	  ret->next = parse_opt_file(f);
+
     return ret;
 }
 
