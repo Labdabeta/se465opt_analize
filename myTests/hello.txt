@@ -3,14 +3,13 @@ This is inadvisable as it may cause display problems. If
 you REALLY want to taste LLVM bitcode first-hand, you
 can force output with the `-f' option.
 
-CallGraph Root is: main
-Call graph node <<null function>><<0x9d8cb0>>  #uses=0
+Call graph node <<null function>><<0x527f000>>  #uses=0
   CS<0x0> calls function 'main'
   CS<0x0> calls function 'printf'
 
-Call graph node for function: 'main'<<0x9eeee0>>  #uses=1
-  CS<0x9d67a0> calls function 'printf'
+Call graph node for function: 'main'<<0x5284510>>  #uses=1
+  CS<0x5282d30> calls function 'printf'
 
-Call graph node for function: 'printf'<<0x9eef80>>  #uses=2
+Call graph node for function: 'printf'<<0x5280230>>  #uses=2
   CS<0x0> calls external node
 

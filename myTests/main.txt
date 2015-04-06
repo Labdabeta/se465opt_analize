@@ -3,8 +3,7 @@ This is inadvisable as it may cause display problems. If
 you REALLY want to taste LLVM bitcode first-hand, you
 can force output with the `-f' option.
 
-CallGraph Root is: main
-Call graph node <<null function>><<0x132e370>>  #uses=0
+Call graph node <<null function>><<0x749f6e0>>  #uses=0
   CS<0x0> calls function 'main'
   CS<0x0> calls function 'scope1'
   CS<0x0> calls function 'scope2'
@@ -18,55 +17,55 @@ Call graph node <<null function>><<0x132e370>>  #uses=0
   CS<0x0> calls function 'C'
   CS<0x0> calls function 'D'
 
-Call graph node for function: 'scope6'<<0x132e650>>  #uses=2
-  CS<0x13156f8> calls function 'B'
-  CS<0x1315778> calls function 'D'
+Call graph node for function: 'main'<<0x749fff0>>  #uses=1
+  CS<0x74a3058> calls function 'scope1'
+  CS<0x74a30d8> calls function 'scope2'
+  CS<0x74a3158> calls function 'scope3'
+  CS<0x74a31d8> calls function 'scope4'
+  CS<0x74a3258> calls function 'scope5'
+  CS<0x74a32d8> calls function 'scope6'
 
-Call graph node for function: 'A'<<0x132e440>>  #uses=5
-  CS<0x1315a20> calls function 'printf'
+Call graph node for function: 'scope1'<<0x74a54a0>>  #uses=3
+  CS<0x74a3438> calls function 'A'
+  CS<0x74a34b8> calls function 'B'
+  CS<0x74a3538> calls function 'C'
+  CS<0x74a35b8> calls function 'D'
 
-Call graph node for function: 'main'<<0x132e410>>  #uses=1
-  CS<0x1310858> calls function 'scope1'
-  CS<0x13108d8> calls function 'scope2'
-  CS<0x13148d8> calls function 'scope3'
-  CS<0x1314958> calls function 'scope4'
-  CS<0x13149d8> calls function 'scope5'
-  CS<0x1314a58> calls function 'scope6'
+Call graph node for function: 'scope2'<<0x74a5540>>  #uses=2
+  CS<0x74a6008> calls function 'A'
+  CS<0x74a6088> calls function 'C'
+  CS<0x74a6108> calls function 'D'
 
-Call graph node for function: 'scope1'<<0x132e4b0>>  #uses=3
-  CS<0x1314bb8> calls function 'A'
-  CS<0x1314c38> calls function 'B'
-  CS<0x1314cb8> calls function 'C'
-  CS<0x1314d38> calls function 'D'
+Call graph node for function: 'scope3'<<0x74a54d0>>  #uses=2
+  CS<0x74a6188> calls function 'A'
+  CS<0x74a6208> calls function 'B'
 
-Call graph node for function: 'scope2'<<0x132e550>>  #uses=2
-  CS<0x1314e78> calls function 'A'
-  CS<0x1314ef8> calls function 'C'
-  CS<0x1314f78> calls function 'D'
+Call graph node for function: 'scope4'<<0x74aa700>>  #uses=2
+  CS<0x74a6348> calls function 'B'
+  CS<0x74a63c8> calls function 'D'
+  CS<0x74a6448> calls function 'scope1'
 
-Call graph node for function: 'scope3'<<0x132e4e0>>  #uses=2
-  CS<0x13150b8> calls function 'A'
-  CS<0x1315138> calls function 'B'
+Call graph node for function: 'scope5'<<0x74aa770>>  #uses=2
+  CS<0x74a6588> calls function 'B'
+  CS<0x74a6608> calls function 'D'
+  CS<0x74a6688> calls function 'A'
 
-Call graph node for function: 'scope4'<<0x132e6e0>>  #uses=2
-  CS<0x1315278> calls function 'B'
-  CS<0x13152f8> calls function 'D'
-  CS<0x1315378> calls function 'scope1'
+Call graph node for function: 'scope6'<<0x74aa670>>  #uses=2
+  CS<0x74a67c8> calls function 'B'
+  CS<0x74a6848> calls function 'D'
 
-Call graph node for function: 'scope5'<<0x132e750>>  #uses=2
-  CS<0x13154b8> calls function 'B'
-  CS<0x1315538> calls function 'D'
-  CS<0x13155b8> calls function 'A'
+Call graph node for function: 'A'<<0x749f3e0>>  #uses=5
+  CS<0x74a6b80> calls function 'printf'
 
-Call graph node for function: 'printf'<<0x132eb90>>  #uses=5
+Call graph node for function: 'printf'<<0x74aabb0>>  #uses=5
   CS<0x0> calls external node
 
-Call graph node for function: 'B'<<0x132e940>>  #uses=6
-  CS<0x1315cb0> calls function 'printf'
+Call graph node for function: 'B'<<0x74aa960>>  #uses=6
+  CS<0x74a6e40> calls function 'printf'
 
-Call graph node for function: 'C'<<0x132e8d0>>  #uses=3
-  CS<0x1315f40> calls function 'printf'
+Call graph node for function: 'C'<<0x74aa8f0>>  #uses=3
+  CS<0x74a7100> calls function 'printf'
 
-Call graph node for function: 'D'<<0x132ead0>>  #uses=6
-  CS<0x13161d0> calls function 'printf'
+Call graph node for function: 'D'<<0x74aaaf0>>  #uses=6
+  CS<0x74a73c0> calls function 'printf'
 
