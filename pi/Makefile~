@@ -1,0 +1,6 @@
+# build pipair
+all: 
+	gcc *.c -o pipair -g
+
+clean: 
+	($RM) pipair

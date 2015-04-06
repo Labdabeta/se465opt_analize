@@ -1,0 +1,1 @@
+../pipair: line 3: 17809 Aborted                 (core dumped) opt -print-callgraph $1 2> $1.txt > /dev/null
