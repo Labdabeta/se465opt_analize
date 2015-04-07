@@ -37,17 +37,17 @@ static CalleeList *parse_callees(FILE *f)
     
     ret = malloc(sizeof(CalleeList));
 		
-    char temp = *(line++);
-    while (temp != '\'' && temp != 'e'){ //scan to first ' or e
-    	temp = *(line++);
+    //Scan to first ', if e is found skip line
+    while (*(line++) != '\'')
+    {
+        if (*line == 'e')
+        {
+            ret = parse_callees(f);
+            free(save);
+            return ret;
+        }
     }
  		
- 		//case 2: call to an external node
-    if (temp == 'e') { 
-        return NULL;
-    }
-    
-		//case 3: actual call we care about
     i=0;
 
     ret->name = malloc(sizeof(char)*FUNCTION_NAME_BUFFER_SIZE);
