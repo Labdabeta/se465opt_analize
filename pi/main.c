@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
         t_confidence = atoi(argv[3]);
 
     input_file = fopen(input_file_name, "r");
-		fgets(buf, LINE_LENGTH_BUFFER_SIZE, input_file);//get rid of entry point
+    if (!input_file) return 1;
+    fgets(buf, LINE_LENGTH_BUFFER_SIZE, input_file);//get rid of entry point
     
     while (buf[0]!='\n') //get rid of <null function>
         fgets(buf, LINE_LENGTH_BUFFER_SIZE, input_file);
@@ -40,5 +41,6 @@ int main(int argc, char *argv[])
     //TO DO: free buglist
     free_calling_map(cm);
     free_parsed_file(pf);
+    fclose(input_file);
     return 0;
 }

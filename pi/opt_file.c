@@ -40,7 +40,8 @@ static CalleeList *parse_callees(FILE *f)
     //Scan to first ', if e is found skip line
     while (*(line++) != '\'')
     {
-        if (*line == 'e')
+	//looking for word "external", but other letters are not unique to the word
+        if (*line == 'r') 
         {
             ret = parse_callees(f);
             free(save);
@@ -49,6 +50,7 @@ static CalleeList *parse_callees(FILE *f)
     }
  		
     i=0;
+    if(!ret) return NULL;
 
     ret->name = malloc(sizeof(char)*FUNCTION_NAME_BUFFER_SIZE);
     ret->name[i++] = *line;
@@ -93,18 +95,16 @@ ParsedFileHANDLE parse_opt_file(FILE *f)
     if (feof(f) || *(line++) == '\n') return NULL; //if it's the end of the file
     while (*(line++) != '\''); //scan to first '
 
- 	  i=0;
- 	  while (*line != '\'')
- 	      fname[i++] = *(line++);
- 	  fname[i] = 0;
-
- 	  ret->fname = fname;
-
- 	  free(save);
-
- 	  ret->callees = parse_callees(f);
-
- 	  ret->next = parse_opt_file(f);
+	i=0;
+	while (*line != '\'') {
+		  fname[i++] = *(line++);
+	}
+	fname[i] = 0;
+	if(!ret) return NULL;
+	ret->fname = fname;
+	free(save);
+	ret->callees = parse_callees(f);
+	ret->next = parse_opt_file(f);
 
     return ret;
 }

@@ -9,6 +9,7 @@ typedef struct SupportMapTAG {
 SupportMapHANDLE generate_support_map(const CallingMapHANDLE cmh)
 {
     SupportMap *ret = malloc(sizeof(SupportMap));
+    if(!ret) return NULL;
     ret->numFunctions = calling_map_num_functions(cmh);
     ret->support = malloc(sizeof(int)*ret->numFunctions*ret->numFunctions);
     int i,ii,iii;

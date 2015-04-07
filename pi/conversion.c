@@ -77,6 +77,7 @@ CallingMapHANDLE calling_map_from_parsed_file(const ParsedFileHANDLE pfh)
 
     //Load functions into calling map
     ret->functions = malloc(sizeof(Function)*ret->numFunctions);
+    if(!ret->functions) return NULL; 
     for (i=0; i<ret->numFunctions; ++i)
     {
         //NB: this shallow copy means that the name will be clobbered if the
