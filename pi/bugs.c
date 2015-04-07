@@ -28,7 +28,7 @@ static void push_bug(BugReport br, BugList *bl)
 }
 
 //Adds all instances of a without b in cmh to bl
-static void add_bugs(CallingMapHANDLE cmh, BugList *bl, int a, int b, int s, int c)
+static void add_bugs(CallingMapHANDLE cmh, BugList *bl, int a, int b, int s, float c)
 {
     int i,ii;
     BugReport br;
@@ -68,10 +68,10 @@ BugListHANDLE generate_bug_list(const CallingMapHANDLE cmh, int t_support, int t
         {
             if (ii==i) continue;
             if (support_map_get_support(sm,i,ii) >= t_support)
-            {
-                int confidence = 100*support_map_get_support(sm,i,ii);
-                confidence /= support_map_get_support(sm,i,i);
-                if (confidence == 100) continue;
+           {
+                float confidence = 100.0*support_map_get_support(sm,i,ii);
+                confidence /= (float)support_map_get_support(sm,i,i);
+                if (confidence == 100.0) continue;
                 if (confidence >= t_confidence)
                     add_bugs(cmh,ret,i,ii,support_map_get_support(sm,i,ii),
                         confidence);
@@ -104,7 +104,7 @@ void print_bug_list(const BugListHANDLE blh, const CallingMapHANDLE cmh)
             calling_map_get_fname(cmh,bl->bug.scope),
             aname,
             bname,
-            bl->bug.support,(float)bl->bug.confidence);
+            bl->bug.support,bl->bug.confidence);
         bl = bl->next;
     }
 }
