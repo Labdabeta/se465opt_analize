@@ -90,11 +90,20 @@ void print_bug_list(const BugListHANDLE blh, const CallingMapHANDLE cmh)
 
     while (bl)
     {
+        char *aname = calling_map_get_fname(cmh,bl->bug.source);
+        char *bname = calling_map_get_fname(cmh,bl->bug.missing);
+        if (strcmp(aname,bname)>0)
+        {
+            char *tmp = aname;
+            aname = bname;
+            bname = tmp;
+        }
+
         printf("bug: %s in %s, pair: (%s, %s), support: %d, confidence: %.2f%%\n",
             calling_map_get_fname(cmh,bl->bug.source),
             calling_map_get_fname(cmh,bl->bug.scope),
-            calling_map_get_fname(cmh,MIN(bl->bug.missing,bl->bug.source)),
-            calling_map_get_fname(cmh,MAX(bl->bug.source,bl->bug.missing)),
+            aname,
+            bname,
             bl->bug.support,(float)bl->bug.confidence);
         bl = bl->next;
     }
